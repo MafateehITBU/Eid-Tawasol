@@ -59,11 +59,11 @@ input[type="text"] {
 
 input[type="text"]:focus {
     outline: none;
-    border-color: #f44d00;
+    border-color: #ed3c40;
 }
 
 .download-btn {
-    background: #f44d00;
+    background: #ed3c40;
     color: white;
     border: none;
     padding: 12px 30px;
@@ -75,7 +75,7 @@ input[type="text"]:focus {
 }
 
 .download-btn:hover {
-    background: #d44400;
+    background: rgba(212, 67, 0, 0.665);
 }
 
 /* Responsive design */
@@ -91,4 +91,23 @@ input[type="text"]:focus {
     input[type="text"] {
         max-width: 250px;
     }
+}
+
+.lang {
+    margin-bottom: 20px;
+}
+
+.lang h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.lang input[type="radio"] {
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.lang label {
+    margin-right: 15px;
+    cursor: pointer;
 }

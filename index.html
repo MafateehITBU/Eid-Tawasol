@@ -13,12 +13,18 @@
 
 <body>
     <div class="container">
-        <h2>يسر شركة تواصل ان تهنئ موظفيها بقدوم عيد الفطر المبارك</h2>
+        <h2>يسر شركة تواصل للخدمات ان تهنئ موظفيها بقدوم عيد الفطر المبارك</h2>
 
         <canvas id="greetingCanvas" width="400" height="600"></canvas>
 
         <div class="form-group">
-           
+            <div class="lang">
+                <h2>اختر لغة التصميم</h2>
+                <input type="radio" id="eng" name="language" value="eng" onchange="changeTemplate()" />
+                <label for="eng">English</label>
+                <input type="radio" id="ar" name="language" value="ar" onchange="changeTemplate()" checked />
+                <label for="ar">العربية</label>
+            </div>
 
             <input type="text" id="nameInput" placeholder="الاسم" oninput="generateCard()" />
             <button onclick="downloadCard()" class="download-btn">Download</button>
@@ -38,13 +44,25 @@
         ctx.scale(scaleFactor, scaleFactor);
 
         const template = new Image();
-        template.src = "eid-tawasol.jpg"; // Default template (Arabic without logo)
+        template.src = "eid-AR.jpg"; // Default Arabic template
 
         template.onload = function () {
             generateCard();
         };
 
-        
+        function changeTemplate() {
+            const selectedLanguage = document.querySelector('input[name="language"]:checked').value;
+            
+            if (selectedLanguage === "eng") {
+                template.src = "eid-ENG.jpg";
+            } else {
+                template.src = "eid_AR.jpg";
+            }
+
+            template.onload = function () {
+                generateCard();
+            };
+        }
 
         function generateCard() {
             const name = document.getElementById("nameInput").value.trim();
@@ -54,9 +72,9 @@
 
             if (name !== "") {
                 ctx.font = `${10 * scaleFactor}px Almarai`; // Scale font size
-                ctx.fillStyle = "#f44d00";
+                ctx.fillStyle = "#ed3c40";
                 ctx.textAlign = "center";
-                ctx.fillText(name, canvas.width / (2 * scaleFactor), 380);
+                ctx.fillText(name, canvas.width / (2 * scaleFactor), 530);
             }
         }
 
