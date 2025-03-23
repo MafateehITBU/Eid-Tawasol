@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid Greeting Generator</title>
+    <link rel="stylesheet" href="./style.css">
+
+    <!-- Include SweetAlert library -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>يسر شركة تواصل ان تهنئ موظفيها بقدوم عيد الفطر المبارك</h2>
+
+        <canvas id="greetingCanvas" width="400" height="600"></canvas>
+
+        <div class="form-group">
+           
+
+            <input type="text" id="nameInput" placeholder="الاسم" oninput="generateCard()" />
+            <button onclick="downloadCard()" class="download-btn">Download</button>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("greetingCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Set high-resolution scaling
+        const scaleFactor = 2; // Adjust for higher quality
+        canvas.width = 400 * scaleFactor;
+        canvas.height = 600 * scaleFactor;
+        canvas.style.width = "400px";
+        canvas.style.height = "600px";
+        ctx.scale(scaleFactor, scaleFactor);
+
+        const template = new Image();
+        template.src = "eid-tawasol.jpg"; // Default template (Arabic without logo)
+
+        template.onload = function () {
+            generateCard();
+        };
+
+        
+
+        function generateCard() {
+            const name = document.getElementById("nameInput").value.trim();
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(template, 0, 0, canvas.width / scaleFactor, canvas.height / scaleFactor);
+
+            if (name !== "") {
+                ctx.font = `${10 * scaleFactor}px Almarai`; // Scale font size
+                ctx.fillStyle = "#f44d00";
+                ctx.textAlign = "center";
+                ctx.fillText(name, canvas.width / (2 * scaleFactor), 380);
+            }
+        }
+
+        function downloadCard() {
+            const name = document.getElementById("nameInput").value.trim();
+
+            if (name === "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: '!يرجى إدخال الاسم'
+                });
+                return;
+            }
+
+            const link = document.createElement("a");
+            link.download = "Eid-Greeting.png";
+            link.href = canvas.toDataURL("image/png", 1.0); // Highest quality
+            link.click();
+        }
+    </script>
+</body>
+
+</html>
