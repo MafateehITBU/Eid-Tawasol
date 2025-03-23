@@ -44,37 +44,62 @@
         ctx.scale(scaleFactor, scaleFactor);
 
         const template = new Image();
-        template.src = "eid-AR.jpg"; // Default Arabic template
-
-        template.onload = function () {
-            generateCard();
-        };
 
         function changeTemplate() {
             const selectedLanguage = document.querySelector('input[name="language"]:checked').value;
             
+            // Clear the canvas first
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Update template source based on selection
             if (selectedLanguage === "eng") {
                 template.src = "eid-ENG.jpg";
-            } else {
-                template.src = "eid_AR.jpg";
+            } else if(selectedLanguage === "ar") {
+                template.src = "eid-AR.jpg";
             }
 
-            template.onload = function () {
-                generateCard();
+            // Wait for the template to load before drawing
+            template.onload = function() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(template, 0, 0, canvas.width / scaleFactor, canvas.height / scaleFactor);
+                
+                // Redraw name if exists
+                const name = document.getElementById("nameInput").value.trim();
+                if (name !== "") {
+                    ctx.font = `${10 * scaleFactor}px Almarai`;
+                    ctx.fillStyle = "#f44d00";
+                    ctx.textAlign = "center";
+                    ctx.fillText(name, canvas.width / (2 * scaleFactor), 380);
+                }
             };
         }
+
+        // Make sure the initial template is loaded
+        window.onload = function() {
+            template.src = "eid-AR.jpg"; // Default Arabic template
+            template.onload = function() {
+                generateCard();
+            };
+        };
 
         function generateCard() {
             const name = document.getElementById("nameInput").value.trim();
 
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(template, 0, 0, canvas.width / scaleFactor, canvas.height / scaleFactor);
+            // Make sure to wait for the template to be loaded
+            if (template.complete) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(template, 0, 0, canvas.width / scaleFactor, canvas.height / scaleFactor);
 
-            if (name !== "") {
-                ctx.font = `${10 * scaleFactor}px Almarai`; // Scale font size
-                ctx.fillStyle = "#ed3c40";
-                ctx.textAlign = "center";
-                ctx.fillText(name, canvas.width / (2 * scaleFactor), 530);
+                if (name !== "") {
+                    ctx.font = `${10 * scaleFactor}px Almarai`; // Scale font size
+                    ctx.fillStyle = "#f44d00";
+                    ctx.textAlign = "center";
+                    ctx.fillText(name, canvas.width / (2 * scaleFactor), 500);
+                }
+            } else {
+                template.onload = function() {
+                    generateCard();
+                };
             }
         }
 
