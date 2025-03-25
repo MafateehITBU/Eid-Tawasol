@@ -59,11 +59,11 @@ input[type="text"] {
 
 input[type="text"]:focus {
     outline: none;
-    border-color: #ed3c40;
+    border-color: #EC3C3F;
 }
 
 .download-btn {
-    background: #ed3c40;
+    background: #EC3C3F;
     color: white;
     border: none;
     padding: 12px 30px;

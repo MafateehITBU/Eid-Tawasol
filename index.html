@@ -18,14 +18,6 @@
         <canvas id="greetingCanvas" width="400" height="600"></canvas>
 
         <div class="form-group">
-            <div class="lang">
-                <h2>اختر لغة التصميم</h2>
-                <input type="radio" id="eng" name="language" value="eng" onchange="changeTemplate()" />
-                <label for="eng">English</label>
-                <input type="radio" id="ar" name="language" value="ar" onchange="changeTemplate()" checked />
-                <label for="ar">العربية</label>
-            </div>
-
             <input type="text" id="nameInput" placeholder="الاسم" oninput="generateCard()" />
             <button onclick="downloadCard()" class="download-btn">Download</button>
         </div>
@@ -45,38 +37,9 @@
 
         const template = new Image();
 
-        function changeTemplate() {
-            const selectedLanguage = document.querySelector('input[name="language"]:checked').value;
-            
-            // Clear the canvas first
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Update template source based on selection
-            if (selectedLanguage === "eng") {
-                template.src = "eid-ENG.jpg";
-            } else if(selectedLanguage === "ar") {
-                template.src = "eid-AR.jpg";
-            }
-
-            // Wait for the template to load before drawing
-            template.onload = function() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(template, 0, 0, canvas.width / scaleFactor, canvas.height / scaleFactor);
-                
-                // Redraw name if exists
-                const name = document.getElementById("nameInput").value.trim();
-                if (name !== "") {
-                    ctx.font = `${10 * scaleFactor}px Almarai`;
-                    ctx.fillStyle = "#ec3c3f";
-                    ctx.textAlign = "center";
-                    ctx.fillText(name, canvas.width / (2 * scaleFactor), 380);
-                }
-            };
-        }
-
         // Make sure the initial template is loaded
         window.onload = function() {
-            template.src = "eid-AR.jpg"; // Default Arabic template
+            template.src = "eidimage.jpg";
             template.onload = function() {
                 generateCard();
             };
@@ -92,9 +55,9 @@
 
                 if (name !== "") {
                     ctx.font = `${10 * scaleFactor}px Almarai`; // Scale font size
-                    ctx.fillStyle = "#f44d00";
+                    ctx.fillStyle = "#EB3D3E";
                     ctx.textAlign = "center";
-                    ctx.fillText(name, canvas.width / (2 * scaleFactor), 500);
+                    ctx.fillText(name, canvas.width / (2 * scaleFactor), 550);
                 }
             } else {
                 template.onload = function() {
